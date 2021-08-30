@@ -6,10 +6,10 @@ const handler: NextApiHandler = async (req, res) => {
 
   const { url } = req.body;
 
-  QRCode.toString(url, function (err, string) {
+  QRCode.toDataURL(url, function (err, base64) {
     if (err) return res.status(500).json({ error: err.name });
 
-    res.status(200).json({ data: string });
+    return res.status(200).json({ data: base64, url });
   });
 };
 
