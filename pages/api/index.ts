@@ -9,7 +9,14 @@ const handler: NextApiHandler = async (req, res) => {
   QRCode.toDataURL(url, function (err, base64) {
     if (err) return res.status(500).json({ error: err.name });
 
-    return res.status(200).json({ data: base64, url });
+    const decoded = base64.replace("data:image/png;base64,", "");
+    const imageResp = new Buffer(decoded, "base64");
+
+    res.writeHead(200, {
+      "Content-Type": "image/png",
+      "Content-Length": imageResp.length,
+    });
+    res.end(imageResp);
   });
 };
 
