@@ -1,0 +1,3 @@
+type ApiInput = {
+  url: string;
+};
